@@ -47,46 +47,124 @@ BAM → bcftools → Filtering → Functional Analysis → Pathway Enrichment(us
 
 ## 🧬 RNA-Seq Pipeline (Commands Used)
 
-### 1. Quality Control
-### bash
+Perfect bhai 👍
+Main tujhe **FINAL CLEAN COMMANDS (exact jo tumne use kiye)** de raha hoon — directly **README.md me daal sakta hai**.
+
+---
+
+# 🧬 RNA-Seq Pipeline Commands (Used in Project)
+
+---
+
+## 🔹 1. FastQC (Quality Check)
+
+```bash
 fastqc SRR1795105_1.fastq.gz SRR1795105_2.fastq.gz
+```
 
-### 2. Trimming
+---
+
+## 🔹 2. fastp (Adapter Trimming & Filtering)
+
+```bash
 fastp \
--i SRR1795105_1.fastq.gz \
--I SRR1795105_2.fastq.gz \
--o SRR1795105_1.trimmed.fastq \
--O SRR1795105_2.trimmed.fastq \
---detect_adapter_for_pe \
---thread 8 \
---html SRR1795105_fastp.html \
---json SRR1795105_fastp.json
+  -i SRR1795105_1.fastq.gz \
+  -I SRR1795105_2.fastq.gz \
+  -o SRR1795105_1.trimmed.fastq \
+  -O SRR1795105_2.trimmed.fastq \
+  --detect_adapter_for_pe \
+  --thread 4 \
+  --html SRR1795105_fastp.html \
+  --json SRR1795105_fastp.json
+```
 
-### 3. Reference Indexing
+---
+
+## 🔹 3. HISAT2 Indexing (mm10 Genome)
+
+```bash
 hisat2-build \
-GCF_000001635.26_GRCm38.p6_genomic.fna \
-mm10_refseq
+  GCF_000001635.26_GRCm38.p6_genomic.fna \
+  mm10_refseq
+```
 
-### 4. Alignment
+---
+
+## 🔹 4. HISAT2 Alignment
+
+```bash
 hisat2 -p 4 --dta \
--x /mnt/d/rawdata/refgenome/mm10/mm10_refseq \
--1 SRR1795105_1.trimmed.fastq \
--2 SRR1795105_2.trimmed.fastq \
--S Control1.sam
+  -x /mnt/d/rawdata/refgenome/mm10/mm10_refseq \
+  -1 SRR1795105_1.trimmed.fastq \
+  -2 SRR1795105_2.trimmed.fastq \
+  -S Control1.sam
+```
 
-### 5. SAM to BAM + Sorting
-samtools view -@ 4 -bS Control1.sam | \
-samtools sort -@ 4 -o Control1.sorted.bam
+---
 
-### 6. Indexing
+## 🔹 5. SAM → Sorted BAM Conversion
+
+```bash
+samtools view -@ 4 -bS Control1.sam | samtools sort -@ 4 -o Control1.sorted.bam
+```
+
+---
+
+## 🔹 6. BAM Indexing
+
+```bash
 samtools index Control1.sorted.bam
+```
 
-### 7. Gene Counting
+---
+
+## 🔹 7. Remove SAM (to save space)
+
+```bash
+rm Control1.sam
+```
+
+---
+
+## 🔹 8. Gene Counting (featureCounts)
+
+```bash
 featureCounts \
--a genes.gtf \
--o gene_counts.txt \
-Control1.sorted.bam Control2.sorted.bam Control3.sorted.bam Control4.sorted.bam \
-Q175-1.sorted.bam Q175-2.sorted.bam Q175-3.sorted.bam Q175-4.sorted.bam
+  -a genes.gtf \
+  -o gene_counts.txt \
+  Control1.sorted.bam Control2.sorted.bam Control3.sorted.bam Control4.sorted.bam \
+  Q175-1.sorted.bam Q175-2.sorted.bam Q175-3.sorted.bam Q175-4.sorted.bam
+```
+
+---
+
+# 🔥 Important Notes (README me likhna)
+
+* Genome used: **mm10 (GRCm38)**
+* Alignment tool: **HISAT2**
+* Threads used: **4**
+* Input data: **paired-end RNA-seq FASTQ**
+* Output:
+
+  * `.sorted.bam`
+  * `.bai`
+  * `gene_counts.txt`
+
+---
+
+# 🧠 Reusability Note (IMPORTANT)
+
+> Replace SRR IDs and sample names accordingly for each sample.
+
+---
+
+Agar chaho toh main:
+
+* README ka **full GitHub format (badges + sections + workflow diagram)**
+* ya **project description + installation section**
+
+bhi bana deta hoon taki repo **professional lage (job-ready)** 💪
+
 
 ### Variant Calling Pipeline
 ### Variant Calling
