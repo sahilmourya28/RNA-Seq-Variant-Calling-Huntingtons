@@ -1,6 +1,7 @@
 # RNA-Seq Pipeline Script
+##### for running bash
 #!/bin/bash
-set -e ( #stop pipeline if fail in bash )
+set -e #####(stop pipeline if fail in bash )
 
 # RNA-Seq Pipeline Script
 
