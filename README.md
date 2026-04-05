@@ -90,10 +90,15 @@ Control1.sorted.bam Control2.sorted.bam Control3.sorted.bam Control4.sorted.bam 
 Q175-1.sorted.bam Q175-2.sorted.bam Q175-3.sorted.bam Q175-4.sorted.bam
 
 ### Variant Calling Pipeline
-# Variant Calling
+### Variant Calling
 bcftools mpileup -f reference.fa *.bam | \
 bcftools call -mv -Ov -o variants.vcf
 
-# Variant Filtering
+### Variant Filtering
 bcftools filter -i 'QUAL>30 && DP>10' variants.vcf -o filtered_variants.vcf
-
+### Key Results
+Total variants: 10882
+SNPs: 10642
+Indels: 240
+Functional variants: 364
+Mutated genes: 289
