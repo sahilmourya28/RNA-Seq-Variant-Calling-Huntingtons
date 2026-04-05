@@ -1,9 +1,7 @@
-# RNA-Seq-Variant-Calling-Huntingtons
-End-to-end RNA-Seq analysis and variant calling pipeline for Huntington’s disease mouse model (Q175), including differential expression and pathway enrichment analysis.
-### RNA-Seq Variant Calling in Huntington’s Disease (Mouse Model)
+## RNA-Seq Based Variant Calling in Huntington’s Disease (Mouse Model Q175)
 
 ### Project Overview
-This project presents an end-to-end RNA-Seq analysis and variant calling pipeline performed on a Huntington’s disease (HD) mouse model (Q175).
+This project presents an end-to-end RNA-Seq analysis and variant calling pipeline performed on a Huntington’s disease (HD) mouse model (Q175) of 6 months.
 
 The objective of this study was to:
 - Analyze transcriptomic changes using RNA-Seq data
@@ -26,10 +24,11 @@ RNA-Seq helps in:
 ## Workflow Overview
 
 RNA-Seq Pipeline:
-FASTQ → FastQC → fastp → HISAT2 → SAMtools → featureCounts → DESeq2
+FASTQ → FastQC → fastp → HISAT2 → SAMtools → featureCounts → DESeq2 
+Pathway Enrichment → GO, KEGG analysis, Cnet analysis using R 
 
 Variant Calling Pipeline:
-BAM → bcftools → Filtering → Functional Analysis → Pathway Enrichment
+BAM → bcftools → Filtering → Functional Analysis → Pathway Enrichment(using dbs)
 
 ---
 ## Tools Used
