@@ -136,23 +136,144 @@ featureCounts \
   Q175-1.sorted.bam Q175-2.sorted.bam Q175-3.sorted.bam Q175-4.sorted.bam
 ```
 
-...
 
-### Variant Calling Pipeline
-### Variant Calling
-'''bash 
-bcftools mpileup -f reference.fa *.bam | \
-bcftools call -mv -Ov -o variants.vcf
-'''
+# Variant Calling Pipeline (RNA-Seq Based)
 
-### Variant Filtering
-'''bash
+This pipeline performs variant discovery from RNA-Seq aligned BAM files followed by filtering, functional annotation, and pathway analysis.
+
+---
+
+## 📁 Working Directory
+
+```bash
+/mnt/d/rawdata/variant_calling
+```
+
+---
+
+## 📥 Input Files
+
+* Sorted BAM files:
+
+```
+Control1.sorted.bam
+Control2.sorted.bam
+Control3.sorted.bam
+Control4.sorted.bam
+Q175-1.sorted.bam
+Q175-2.sorted.bam
+Q175-3.sorted.bam
+Q175-4.sorted.bam
+```
+
+* Reference genome:
+
+```
+/mnt/d/rawdata/refgenome/mm10/GCF_000001635.26_GRCm38.p6_genomic.fna
+```
+
+---
+
+# ⚙️ Step 1 — Variant Calling
+
+```bash
+bcftools mpileup --threads 6 \
+-f /mnt/d/rawdata/refgenome/mm10/GCF_000001635.26_GRCm38.p6_genomic.fna \
+Control1.sorted.bam Control2.sorted.bam Control3.sorted.bam Control4.sorted.bam \
+Q175-1.sorted.bam Q175-2.sorted.bam Q175-3.sorted.bam Q175-4.sorted.bam \
+| bcftools call -mv -Ov -o variants.vcf
+```
+
+---
+
+# Variant Filtering
+
+```bash
 bcftools filter -i 'QUAL>30 && DP>10' variants.vcf -o filtered_variants.vcf
-'''
+```
 
-### Key Results
-Total variants: 10882
-SNPs: 10642
-Indels: 240
-Functional variants: 364
-Mutated genes: 289
+---
+
+# SNP and INDEL Separation
+
+```bash
+bcftools view -v snps filtered_variants.vcf -o snps.vcf
+bcftools view -v indels filtered_variants.vcf -o indels.vcf
+```
+
+---
+
+#Genotype Extraction
+
+```bash
+bcftools query -f '%CHROM\t%POS\t[%GT\t]\n' filtered_variants.vcf > genotypes.txt
+```
+
+---
+
+# Q175 Specific Variant Identification
+
+```bash
+awk '($3=="0/0" && $4=="0/0" && $5=="0/0" && $6=="0/0" && ($7!="0/0" || $8!="0/0" || $9!="0/0" || $10!="0/0"))' genotypes.txt > q175_specific_variants.txt
+```
+
+---
+
+# Variant Annotation (SnpEff)
+
+```bash
+java -Xmx6g -jar $CONDA_PREFIX/share/snpeff*/snpEff.jar \
+GRCm38.99 filtered_variants.vcf > annotated_variants.vcf
+```
+
+---
+
+# Functional Variant Extraction
+
+```bash
+grep -Ei "missense_variant|frameshift_variant|stop_gained|splice" annotated_variants.vcf > functional_variants.vcf
+```
+
+---
+
+# Mutated Gene Extraction
+
+```bash
+grep -v "^#" functional_variants.vcf | cut -f8 | grep ANN | sed 's/.*ANN=//' | cut -d"|" -f4 | sort | uniq > mutated_genes.txt
+```
+
+---
+
+# Pathway Enrichment Analysis
+
+* Tool used: Enrichr
+* Input:
+
+```
+mutated_genes.txt
+```
+
+* Databases:
+
+```
+KEGG
+Reactome
+WikiPathways
+```
+
+---
+
+# Final Outputs
+
+```
+variants.vcf
+filtered_variants.vcf
+snps.vcf
+indels.vcf
+genotypes.txt
+q175_specific_variants.txt
+annotated_variants.vcf
+functional_variants.vcf
+mutated_genes.txt
+```
+
