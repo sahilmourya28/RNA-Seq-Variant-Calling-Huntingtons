@@ -136,43 +136,20 @@ featureCounts \
   Q175-1.sorted.bam Q175-2.sorted.bam Q175-3.sorted.bam Q175-4.sorted.bam
 ```
 
----
-
-# 🔥 Important Notes (README me likhna)
-
-* Genome used: **mm10 (GRCm38)**
-* Alignment tool: **HISAT2**
-* Threads used: **4**
-* Input data: **paired-end RNA-seq FASTQ**
-* Output:
-
-  * `.sorted.bam`
-  * `.bai`
-  * `gene_counts.txt`
-
----
-
-# 🧠 Reusability Note (IMPORTANT)
-
-> Replace SRR IDs and sample names accordingly for each sample.
-
----
-
-Agar chaho toh main:
-
-* README ka **full GitHub format (badges + sections + workflow diagram)**
-* ya **project description + installation section**
-
-bhi bana deta hoon taki repo **professional lage (job-ready)** 💪
-
+...
 
 ### Variant Calling Pipeline
 ### Variant Calling
+'''bash 
 bcftools mpileup -f reference.fa *.bam | \
 bcftools call -mv -Ov -o variants.vcf
+'''
 
 ### Variant Filtering
+'''bash
 bcftools filter -i 'QUAL>30 && DP>10' variants.vcf -o filtered_variants.vcf
+'''
+
 ### Key Results
 Total variants: 10882
 SNPs: 10642
