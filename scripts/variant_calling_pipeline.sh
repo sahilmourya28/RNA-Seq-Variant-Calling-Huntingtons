@@ -1,4 +1,4 @@
-# Variant Calling Pipeline (RNA-Seq Based)
+## Variant Calling Pipeline (RNA-Seq Based)
 
 # Step 1: Variant Calling
 bcftools mpileup --threads 6 \
