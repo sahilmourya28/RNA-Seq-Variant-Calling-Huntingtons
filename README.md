@@ -43,16 +43,10 @@ BAM → bcftools → Filtering → Functional Analysis → Pathway Enrichment(us
 | Differential Expression | DESeq2 |
 | Variant Calling | bcftools |
 
----
-
-## 🧬 RNA-Seq Pipeline (Commands Used)
-
-Perfect bhai 👍
-Main tujhe **FINAL CLEAN COMMANDS (exact jo tumne use kiye)** de raha hoon — directly **README.md me daal sakta hai**.
 
 ---
 
-# 🧬 RNA-Seq Pipeline Commands (Used in Project)
+# RNA-Seq Pipeline Commands (Used in Project)
 
 ---
 
@@ -174,7 +168,7 @@ Q175-4.sorted.bam
 
 ---
 
-# ⚙️ Step 1 — Variant Calling
+## Variant Calling
 
 ```bash
 bcftools mpileup --threads 6 \
@@ -186,7 +180,7 @@ Q175-1.sorted.bam Q175-2.sorted.bam Q175-3.sorted.bam Q175-4.sorted.bam \
 
 ---
 
-# Variant Filtering
+## Variant Filtering
 
 ```bash
 bcftools filter -i 'QUAL>30 && DP>10' variants.vcf -o filtered_variants.vcf
@@ -194,7 +188,7 @@ bcftools filter -i 'QUAL>30 && DP>10' variants.vcf -o filtered_variants.vcf
 
 ---
 
-# SNP and INDEL Separation
+## SNP and INDEL Separation
 
 ```bash
 bcftools view -v snps filtered_variants.vcf -o snps.vcf
@@ -203,7 +197,7 @@ bcftools view -v indels filtered_variants.vcf -o indels.vcf
 
 ---
 
-#Genotype Extraction
+## Genotype Extraction
 
 ```bash
 bcftools query -f '%CHROM\t%POS\t[%GT\t]\n' filtered_variants.vcf > genotypes.txt
@@ -211,7 +205,7 @@ bcftools query -f '%CHROM\t%POS\t[%GT\t]\n' filtered_variants.vcf > genotypes.tx
 
 ---
 
-# Q175 Specific Variant Identification
+## Q175 Specific Variant Identification
 
 ```bash
 awk '($3=="0/0" && $4=="0/0" && $5=="0/0" && $6=="0/0" && ($7!="0/0" || $8!="0/0" || $9!="0/0" || $10!="0/0"))' genotypes.txt > q175_specific_variants.txt
@@ -219,7 +213,7 @@ awk '($3=="0/0" && $4=="0/0" && $5=="0/0" && $6=="0/0" && ($7!="0/0" || $8!="0/0
 
 ---
 
-# Variant Annotation (SnpEff)
+## Variant Annotation (SnpEff)
 
 ```bash
 java -Xmx6g -jar $CONDA_PREFIX/share/snpeff*/snpEff.jar \
@@ -236,7 +230,7 @@ grep -Ei "missense_variant|frameshift_variant|stop_gained|splice" annotated_vari
 
 ---
 
-# Mutated Gene Extraction
+## Mutated Gene Extraction
 
 ```bash
 grep -v "^#" functional_variants.vcf | cut -f8 | grep ANN | sed 's/.*ANN=//' | cut -d"|" -f4 | sort | uniq > mutated_genes.txt
@@ -244,7 +238,7 @@ grep -v "^#" functional_variants.vcf | cut -f8 | grep ANN | sed 's/.*ANN=//' | c
 
 ---
 
-# Pathway Enrichment Analysis
+## Pathway Enrichment Analysis
 
 * Tool used: Enrichr
 * Input:
