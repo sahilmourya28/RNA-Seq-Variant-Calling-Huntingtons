@@ -1,4 +1,8 @@
 # RNA-Seq Pipeline Script
+#!/bin/bash
+set -e ( #stop pipeline if fail in bash )
+
+# RNA-Seq Pipeline Script
 
 # Step 1: Quality Control (FastQC)
 fastqc SRR1795105_1.fastq.gz SRR1795105_2.fastq.gz
