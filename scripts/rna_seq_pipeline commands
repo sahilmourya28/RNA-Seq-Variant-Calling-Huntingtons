@@ -1,4 +1,4 @@
-# RNA-Seq Pipeline Script
+# RNA-Seq Pipeline Scriptfor control1 paired reads 
 
 # Step 1: Quality Control (FastQC)
 fastqc SRR1795105_1.fastq.gz SRR1795105_2.fastq.gz
