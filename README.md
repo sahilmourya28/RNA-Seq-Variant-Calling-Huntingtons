@@ -258,37 +258,69 @@ WikiPathways
 
 ---
 
-# Final Outputs files of my study 
+### Final Output Files
 
-```
-variants.vcf
-filtered_variants.vcf
-snps.vcf
-indels.vcf
-genotypes.txt
-q175_specific_variants.txt
-annotated_variants.vcf
-functional_variants.vcf
-mutated_genes.txt
-```
-### Key Findings of Variant calling:
-The analysis revealed several important insights:
-A total of 10882 high-confidence variants were identified.
-Among these, 10642 were SNPs and 240 were indels.
-364 functional variants were predicted to have biological impact.
-These variants affected 289 genes.
-### Pathway enrichment analysis indicated involvement of:
-1.Autophagy
-2.Calcium signaling
-3.MAPK signaling
-4.Protein metabolism
-5.Cellular stress response 
-### Reactome Pathways
+The following output files were generated during variant calling:
+
+- variants.vcf  
+- filtered_variants.vcf  
+- snps.vcf  
+- indels.vcf  
+- genotypes.txt  
+- q175_specific_variants.txt  
+- annotated_variants.vcf  
+- functional_variants.vcf  
+- mutated_gene.txt  
+
+---
+
+### Key Findings of Variant Calling
+
+- Total variants identified: **10,882**  
+- SNPs: **10,642**  
+- Indels: **240**  
+- Functional variants: **364**  
+- Mutated genes: **289**
+
+
+### Pathway Enrichment Analysis: 
+Pathway enrichment analysis was performed using
+Enrichr package in R 
+The list of 289 mutated genes was used as input.
+Three pathway databases were analyzed:
+KEGG pathways
+Reactome pathways
+WikiPathways
+
+
+### Enriched Pathways
+A. KEGG Pathways
+Significantly enriched pathways included:
+1.Lysine degradation
+2.Autophagy
+3.Nucleocytoplasmic transport
+These pathways are involved in protein metabolism, cellular stress responses, and intracellular transport.
+
+
+B. Reactome Pathways: 
 Top enriched pathways:
-VEGFA-VEGFR2 signaling
-Nucleotide biosynthesis
-RAC1 GTPase signaling
-MAPK signaling
+1.VEGFA-VEGFR2 signaling
+2.Nucleotide biosynthesis
+3.RAC1 GTPase signaling
+4.MAPK signaling
+These pathways regulate cellular signaling, metabolism, and cytoskeleton dynamics.
+
+
+B. WikiPathways
+Important pathways identified:
+1. PKC gamma calcium signaling
+2. Autophagy pathways
+3. mTOR signaling pathway
+4.Integrin mediated cell adhesion
+These pathways are associated with neuronal signaling, protein degradation, and cellular survival mechanisms.
+
+
+
 
 
 
