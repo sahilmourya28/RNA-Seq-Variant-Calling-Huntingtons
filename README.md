@@ -258,7 +258,7 @@ WikiPathways
 
 ---
 
-# Final Outputs
+# Final Outputs files of my study 
 
 ```
 variants.vcf
@@ -271,4 +271,24 @@ annotated_variants.vcf
 functional_variants.vcf
 mutated_genes.txt
 ```
+### Key Findings of Variant calling:
+The analysis revealed several important insights:
+A total of 10882 high-confidence variants were identified.
+Among these, 10642 were SNPs and 240 were indels.
+364 functional variants were predicted to have biological impact.
+These variants affected 289 genes.
+### Pathway enrichment analysis indicated involvement of:
+1.Autophagy
+2.Calcium signaling
+3.MAPK signaling
+4.Protein metabolism
+5.Cellular stress response 
+### Reactome Pathways
+Top enriched pathways:
+VEGFA-VEGFR2 signaling
+Nucleotide biosynthesis
+RAC1 GTPase signaling
+MAPK signaling
+
+
 
