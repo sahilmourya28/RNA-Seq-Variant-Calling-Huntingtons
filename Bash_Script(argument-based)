@@ -70,12 +70,12 @@ samtools sort -@ 2 -o $BASE_DIR/bam/${SAMPLE}.sorted.bam
 # ----------------
 samtools index $BASE_DIR/bam/${SAMPLE}.sorted.bam
 
-echo "✅ Completed $SAMPLE"
+echo "Completed $SAMPLE"
 
 #  CONTROL STEP
 read -p "Do you want to continue next sample? (y/n): " choice
 
 if [ "$choice" != "y" ]; then
-    echo "⛔ Pipeline stopped by user"
+    echo "Pipeline stopped by user"
     exit 0
 fi
