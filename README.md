@@ -296,25 +296,28 @@ Reactome pathways
 WikiPathways
 
 
+
 ### Enriched Pathways
 A. KEGG Pathways
 Significantly enriched pathways included:
-1.Lysine degradation
-2.Autophagy
-3.Nucleocytoplasmic transport
+1. Lysine degradation
+2. Autophagy
+3. Nucleocytoplasmic transport
 These pathways are involved in protein metabolism, cellular stress responses, and intracellular transport.
+
 
 
 B. Reactome Pathways: 
 Top enriched pathways:
-1.VEGFA-VEGFR2 signaling
-2.Nucleotide biosynthesis
-3.RAC1 GTPase signaling
-4.MAPK signaling
+1. VEGFA-VEGFR2 signaling
+2. Nucleotide biosynthesis
+3. RAC1 GTPase signaling
+4. MAPK signaling
 These pathways regulate cellular signaling, metabolism, and cytoskeleton dynamics.
 
 
-B. WikiPathways
+
+C. WikiPathways
 Important pathways identified:
 1. PKC gamma calcium signaling
 2. Autophagy pathways
