@@ -45,6 +45,8 @@ BAM → bcftools → Filtering → Functional Analysis → Pathway Enrichment(us
 | Variant Calling | bcftools |
 | Annotation | SnpEff |
 
+Some tools required **conda** virtual env, developed as per tool .py version requirements 
+
 
 ---
 
