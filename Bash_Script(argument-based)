@@ -75,10 +75,9 @@ echo "Completed $SAMPLE"
 #  CONTROL STEP
 read -p "Do you want to continue next sample? (y/n): " choice
 
-# RUN THIS SCRIPT USE : ./rna_pipeline.sh/*SAMPLE-NAME*
-
 
 if [ "$choice" != "y" ]; then
     echo "Pipeline stopped by user"
     exit 0
 fi
+# RUN THIS SCRIPT USE : ./rna_pipeline.sh/*SAMPLE-NAME*
