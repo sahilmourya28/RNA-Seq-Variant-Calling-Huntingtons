@@ -36,13 +36,14 @@ BAM → bcftools → Filtering → Functional Analysis → Pathway Enrichment(us
 
 | Step | Tool |
 |------|------|
-| Quality Control | FastQC |
-| Trimming | fastp |
+| Pre Quality Control | FastQC |
+| Post QC & Trimming | fastp |
 | Alignment | HISAT2 |
 | BAM Processing | SAMtools |
 | Counting | featureCounts |
 | Differential Expression | DESeq2 |
 | Variant Calling | bcftools |
+| Annotation | SnpEff |
 
 
 ---
