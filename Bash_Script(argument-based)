@@ -13,7 +13,7 @@ fi
 # Input argument
 SAMPLE=$1
 
-# Paths
+# Paths (we can change paths according to different raw files location in my case i have raw files inside root folder "rawdata")
 BASE_DIR="/mnt/d/rawdata"
 REF="$BASE_DIR/refgenome/mm10_refseq"
 GTF="$BASE_DIR/refgenome/genes.gtf"
@@ -22,7 +22,7 @@ GTF="$BASE_DIR/refgenome/genes.gtf"
 R1="$BASE_DIR/$SAMPLE/${SAMPLE}_1.fastq.gz"
 R2="$BASE_DIR/$SAMPLE/${SAMPLE}_2.fastq.gz"
 
-# Output dirs
+# Output directories
 mkdir -p $BASE_DIR/fastqc_reports
 mkdir -p $BASE_DIR/trimmed_reads
 mkdir -p $BASE_DIR/alignment
