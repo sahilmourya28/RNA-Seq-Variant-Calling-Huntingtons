@@ -20,7 +20,7 @@ RNA-Seq helps in:
 - Understanding disease-associated pathways
 
 ---
-# Datasets Used : https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=gse65774 (6 months datasets of straitum brain tissue 4 Q20 VS 4 Q175)
+### Datasets Used : https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=gse65774 (6 months datasets of straitum brain tissue 4 Q20 VS 4 Q175)
 
 ## Workflow Overview
 
