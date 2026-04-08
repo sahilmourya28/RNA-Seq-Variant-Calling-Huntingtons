@@ -5,8 +5,8 @@ This project presents an end-to-end RNA-Seq analysis and variant calling pipelin
 
 The objective of this study was to:
 - Analyze transcriptomic changes using RNA-Seq data
-- Identify differentially expressed genes (DEGs)
-- Perform variant calling from RNA-Seq aligned BAM files
+- Identify differentially expressed genes (DEGs) and pathway enrichment analysis 
+- Perform variant calling from RNA-Seq aligned BAM files to find INDELS and SNP AND Functionally mutated genes.
 - Understand biological pathways affected in disease condition
 
 ---
@@ -20,6 +20,7 @@ RNA-Seq helps in:
 - Understanding disease-associated pathways
 
 ---
+# Datasets Used : https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=gse65774 (6 months datasets of straitum brain tissue 4 Q20 VS 4 Q175)
 
 ## Workflow Overview
 
@@ -50,7 +51,7 @@ BAM → bcftools → Filtering → Functional Analysis → Pathway Enrichment(us
 
 ---
 
-## 🔹 1. FastQC (Quality Check)
+##  1. FastQC (Quality Check)
 
 ```bash
 fastqc SRR1795105_1.fastq.gz SRR1795105_2.fastq.gz
@@ -58,7 +59,7 @@ fastqc SRR1795105_1.fastq.gz SRR1795105_2.fastq.gz
 
 ---
 
-## 🔹 2. fastp (Adapter Trimming & Filtering)
+##  2. fastp (Adapter Trimming & Filtering)
 
 ```bash
 fastp \
@@ -74,7 +75,7 @@ fastp \
 
 ---
 
-## 🔹 3. HISAT2 Indexing (mm10 Genome)
+##  3. HISAT2 Indexing (mm10 Genome)
 
 ```bash
 hisat2-build \
@@ -84,7 +85,7 @@ hisat2-build \
 
 ---
 
-## 🔹 4. HISAT2 Alignment
+##  4. HISAT2 Alignment
 
 ```bash
 hisat2 -p 4 --dta \
@@ -96,7 +97,7 @@ hisat2 -p 4 --dta \
 
 ---
 
-## 🔹 5. SAM → Sorted BAM Conversion
+##  5. SAM → Sorted BAM Conversion
 
 ```bash
 samtools view -@ 4 -bS Control1.sam | samtools sort -@ 4 -o Control1.sorted.bam
@@ -104,7 +105,7 @@ samtools view -@ 4 -bS Control1.sam | samtools sort -@ 4 -o Control1.sorted.bam
 
 ---
 
-## 🔹 6. BAM Indexing
+##  6. BAM Indexing
 
 ```bash
 samtools index Control1.sorted.bam
@@ -112,7 +113,7 @@ samtools index Control1.sorted.bam
 
 ---
 
-## 🔹 7. Remove SAM (to save space)
+##  7. Remove SAM (to save space)
 
 ```bash
 rm Control1.sam
@@ -120,7 +121,7 @@ rm Control1.sam
 
 ---
 
-## 🔹 8. Gene Counting (featureCounts)
+##  8. Gene Counting (featureCounts)
 
 ```bash
 featureCounts \
@@ -137,7 +138,7 @@ This pipeline performs variant discovery from RNA-Seq aligned BAM files followed
 
 ---
 
-## 📁 Working Directory
+##  Working Directory
 
 ```bash
 /mnt/d/rawdata/variant_calling
@@ -145,7 +146,7 @@ This pipeline performs variant discovery from RNA-Seq aligned BAM files followed
 
 ---
 
-## 📥 Input Files
+##  Input Files
 
 * Sorted BAM files:
 
