@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# ================================
+# RNA-Seq Pipeline (Thread Optimized)
+# ================================
+
+# Checking arguments
+if [ "$#" -ne 1 ]; then
+    echo "Usage: ./rna_pipeline.sh <SAMPLE_NAME>"
+    exit 1
+fi
+
+SAMPLE=$1
+
+# THREADS (change here only once according to pc)
+THREADS=8
+
+# Paths (change paths accn to your designed paths)
+BASE_DIR="/mnt/d/rawdata"
+REF="$BASE_DIR/refgenome/mm10_refseq"
+GTF="$BASE_DIR/refgenome/genes.gtf"
+
+# Files
+R1="$BASE_DIR/$SAMPLE/${SAMPLE}_1.fastq.gz"
+R2="$BASE_DIR/$SAMPLE/${SAMPLE}_2.fastq.gz"
+
+# Output directories(accn to my pc)
+mkdir -p $BASE_DIR/fastqc_reports
+mkdir -p $BASE_DIR/trimmed_reads
+mkdir -p $BASE_DIR/alignment
+mkdir -p $BASE_DIR/bam
+
+echo "===================================="
+echo "Processing sample: $SAMPLE"
+echo "Using $THREADS threads"
+echo "===================================="
+
+# ----------------
+# 1. FastQC
+# ----------------
+fastqc -t $THREADS $R1 $R2 -o $BASE_DIR/fastqc_reports
+
+# ----------------
+# 2. fastp
+# ----------------
+fastp \
+-i $R1 \
+-I $R2 \
+-o $BASE_DIR/trimmed_reads/${SAMPLE}_1.trimmed.fastq.gz \
+-O $BASE_DIR/trimmed_reads/${SAMPLE}_2.trimmed.fastq.gz \
+--detect_adapter_for_pe \
+--thread $THREADS \
+--html $BASE_DIR/trimmed_reads/${SAMPLE}.html \
+--json $BASE_DIR/trimmed_reads/${SAMPLE}.json
+
+# ----------------
+# 3. HISAT2
+# ----------------
+hisat2 -p $THREADS --dta \
+-x $REF \
+-1 $BASE_DIR/trimmed_reads/${SAMPLE}_1.trimmed.fastq.gz \
+-2 $BASE_DIR/trimmed_reads/${SAMPLE}_2.trimmed.fastq.gz \
+-S $BASE_DIR/alignment/${SAMPLE}.sam
+
+# ----------------
+# 4. SAM → BAM → SORT
+# ----------------
+samtools view -@ $THREADS -bS $BASE_DIR/alignment/${SAMPLE}.sam | \
+samtools sort -@ $THREADS -o $BASE_DIR/bam/${SAMPLE}.sorted.bam
+
+# ----------------
+# 5. INDEX
+# ----------------
+samtools index -@ $THREADS $BASE_DIR/bam/${SAMPLE}.sorted.bam
+
+echo "Completed $SAMPLE"
+
+# CONTROL STEP
+read -p "Do you want to continue next sample? (y/n): " choice
+
+if [ "$choice" != "y" ]; then
+    echo "Pipeline stopped by user"
+    exit 0
+fi
